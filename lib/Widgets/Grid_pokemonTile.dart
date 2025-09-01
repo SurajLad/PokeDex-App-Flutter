@@ -10,12 +10,12 @@ class GridPokemonTile extends StatelessWidget {
   final int index;
   final Pokemon pokemon;
 
-  GridPokemonTile({this.index, this.pokemon});
+  GridPokemonTile({required this.index, required this.pokemon});
 
   static const double _pokeballFraction = 0.75;
   static const double _pokemonFraction = 0.74;
 
-  Widget _buildPokeballDecoration({@required double height}) {
+  Widget _buildPokeballDecoration({required double height}) {
     final pokeballSize = height * _pokeballFraction;
 
     return Positioned(
@@ -30,7 +30,7 @@ class GridPokemonTile extends StatelessWidget {
     );
   }
 
-  Widget _buildPokemon({@required double height}) {
+  Widget _buildPokemon({required double height}) {
     final pokemonSize = height * _pokemonFraction;
 
     return Positioned(
@@ -92,7 +92,8 @@ class GridPokemonTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                color: pokemonTypeMap[pokemon.types[0].name].withOpacity(0.12),
+                color: pokemonTypeMap[pokemon.types[0].name]!
+                    .withValues(alpha: 0.12),
                 blurRadius: 30,
                 offset: Offset(0, 8),
               ),
@@ -129,7 +130,7 @@ class GridPokemonTile extends StatelessWidget {
 }
 
 class _CardContent extends StatelessWidget {
-  const _CardContent(this.pokemon, {Key key}) : super(key: key);
+  const _CardContent(this.pokemon, {Key? key}) : super(key: key);
 
   final Pokemon pokemon;
 

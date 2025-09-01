@@ -10,7 +10,12 @@ import 'package:my_pokedex/UI/Moves/TM_Tile.dart';
 class ListPage extends StatefulWidget {
   final String url, title, description, imgUrl;
   final int type;
-  ListPage({this.url, this.title, this.description, this.type, this.imgUrl});
+  ListPage(
+      {required this.url,
+      required this.title,
+      required this.description,
+      required this.type,
+      required this.imgUrl});
   @override
   _ListPageState createState() => _ListPageState();
 }

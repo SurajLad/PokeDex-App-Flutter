@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   HomeController homeController = Get.put(HomeController());
 
   @override
@@ -21,14 +21,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       vsync: this,
       duration: Duration(seconds: 2),
     );
-    animationController.forward();
-    animationController.repeat();
+    animationController?.forward();
+    animationController?.repeat();
     super.initState();
   }
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController?.dispose();
     super.dispose();
   }
 
@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 bottom: (Get.height / 1.35),
                 child: RotationTransition(
                   turns:
-                      Tween(begin: 0.0, end: 1.0).animate(animationController),
+                      Tween(begin: 0.0, end: 1.0).animate(animationController!),
                   child: Image.asset(
                     'assets/pokemon_ball.png',
                     width: 230,

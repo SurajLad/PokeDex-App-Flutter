@@ -5,14 +5,14 @@ import 'package:my_pokedex/Helpers/text_styles.dart';
 class ImageButton extends StatelessWidget {
   final String title;
   final Color color;
-  final Function function;
+  final Function onTap;
   final String imgUrl;
 
   ImageButton({
-    this.title,
-    this.color,
-    this.function,
-    this.imgUrl,
+    required this.title,
+    required this.color,
+    required this.onTap,
+    required this.imgUrl,
   });
 
   @override
@@ -27,7 +27,7 @@ class ImageButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        onPressed: function,
+        onPressed: () => onTap(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

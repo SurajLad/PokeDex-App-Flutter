@@ -9,13 +9,13 @@ import 'package:my_pokedex/utitliy/constants.dart';
 
 class TypeDetailsSheet extends StatefulWidget {
   final String url;
-  TypeDetailsSheet({this.url});
+  TypeDetailsSheet({required this.url});
   @override
   _TypeDetailsSheetState createState() => _TypeDetailsSheetState();
 }
 
 class _TypeDetailsSheetState extends State<TypeDetailsSheet> {
-  TypeDetail typeDetail;
+  TypeDetail? typeDetail;
   String description = "";
 
   @override
