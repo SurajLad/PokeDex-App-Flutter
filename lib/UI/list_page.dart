@@ -10,13 +10,18 @@ import 'package:my_pokedex/UI/Moves/TM_Tile.dart';
 class ListPage extends StatefulWidget {
   final String url, title, description, imgUrl;
   final int type;
-  ListPage({this.url, this.title, this.description, this.type, this.imgUrl});
+  ListPage(
+      {required this.url,
+      required this.title,
+      required this.description,
+      required this.type,
+      required this.imgUrl});
   @override
   _ListPageState createState() => _ListPageState();
 }
 
 class _ListPageState extends State<ListPage> {
-  PagingController<String, Results> _pagingController =
+  PagingController<String, Result> _pagingController =
       PagingController(firstPageKey: "widget.url");
 
   @override
@@ -38,11 +43,11 @@ class _ListPageState extends State<ListPage> {
     try {
       print(pageUrl);
       final newItems = await APIHelper().getMoves(pageUrl);
-      if (newItems.next == null) {
-        _pagingController.appendLastPage(newItems.results);
+      if (newItems?.next == null) {
+        _pagingController.appendLastPage(newItems?.results ?? []);
       } else {
-        final nextPageKey = newItems.next;
-        _pagingController.appendPage(newItems.results, nextPageKey);
+        final nextPageKey = newItems?.next;
+        _pagingController.appendPage(newItems?.results ?? [], nextPageKey);
       }
     } catch (error) {
       _pagingController.error = error;
@@ -76,7 +81,7 @@ class _ListPageState extends State<ListPage> {
                     Navigator.pop(context);
                   },
                   icon: Icon(
-                    LineIcons.arrow_left,
+                    LineIcons.arrowLeft,
                     color: Color(0xFFe94a41),
                   ),
                   iconSize: 30,
@@ -111,7 +116,7 @@ class _ListPageState extends State<ListPage> {
                         ),
                       ),
                       Expanded(
-                          child: PagedGridView<String, Results>(
+                          child: PagedGridView<String, Result>(
                         pagingController: _pagingController,
                         physics: BouncingScrollPhysics(),
                         gridDelegate:
@@ -121,7 +126,7 @@ class _ListPageState extends State<ListPage> {
                           mainAxisSpacing: 8,
                           crossAxisCount: 2,
                         ),
-                        builderDelegate: PagedChildBuilderDelegate<Results>(
+                        builderDelegate: PagedChildBuilderDelegate<Result>(
                           itemBuilder: (context, item, index) => TMTile(
                             moves: item,
                             type: widget.type,

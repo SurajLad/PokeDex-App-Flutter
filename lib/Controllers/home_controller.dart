@@ -6,7 +6,7 @@ import 'package:my_pokedex/Model/pokemon.dart';
 
 class HomeController extends GetxController {
   TextEditingController filterTxtController = TextEditingController();
-  News news;
+  News? news;
   List<Pokemon> pokemonList = [], searchList = [];
 
   Future<String> parseJsonFromAssets(String assetsPath) async {

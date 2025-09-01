@@ -10,10 +10,10 @@ import 'package:my_pokedex/UI/Types/type_details.dart';
 import 'package:my_pokedex/utitliy/constants.dart';
 
 class TMTile extends StatefulWidget {
-  final Results moves;
+  final Result moves;
   final int type;
   final String imgUrl;
-  TMTile({this.moves, this.type, this.imgUrl});
+  TMTile({required this.moves, required this.type, required this.imgUrl});
   @override
   _TMTileState createState() => _TMTileState();
 }
@@ -42,19 +42,15 @@ class _TMTileState extends State<TMTile> {
               switch (widget.type) {
                 case 0:
                   return MoveDetailSheet(url: widget.moves.url);
-                  break;
 
                 case 1:
                   return AbilityDetailSheet(url: widget.moves.url);
-                  break;
 
                 case 2:
                   return ItemDetailSheet(url: widget.moves.url);
-                  break;
 
                 case 3:
                   return TypeDetailsSheet(url: widget.moves.url);
-                  break;
 
                 default:
                   return Container();
@@ -74,7 +70,7 @@ class _TMTileState extends State<TMTile> {
               BoxShadow(
                 offset: Offset(0.0, .5),
                 blurRadius: 8.0,
-                color: Colors.grey[300],
+                color: Colors.grey,
               )
             ]),
         child: GridTile(

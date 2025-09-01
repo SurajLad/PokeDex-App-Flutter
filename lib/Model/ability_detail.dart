@@ -18,101 +18,101 @@ class AbilityDetail {
     final pokemon = <Pokemon>[];
 
     if (json['effect_entries'] != null) {
-      json['effect_entries'].forEach((v) {
-        effectEntries.add(new EffectEntries.fromJson(v));
-      });
+      for (var v in json['effect_entries']) {
+        effectEntries.add(EffectEntries.fromJson(v));
+      }
     }
 
     if (json['pokemon'] != null) {
-      json['pokemon'].forEach((v) {
-        pokemon.add(new Pokemon.fromJson(v));
-      });
+      for (var v in json['pokemon']) {
+        pokemon.add(Pokemon.fromJson(v));
+      }
     }
     return AbilityDetail(
-      id: json['id'],
-      name: json['name'],
-      isMainSeries: json['is_main_series'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? "",
+      isMainSeries: json['is_main_series'] ?? false,
       effectEntries: effectEntries,
       pokemon: pokemon,
     );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.effectEntries != null) {
-      data['effect_entries'] =
-          this.effectEntries.map((v) => v.toJson()).toList();
-    }
-    data['id'] = this.id;
-    data['is_main_series'] = this.isMainSeries;
-    data['name'] = this.name;
-    if (this.pokemon != null) {
-      data['pokemon'] = this.pokemon.map((v) => v.toJson()).toList();
-    }
-    return data;
+    return {
+      'effect_entries': effectEntries.map((v) => v.toJson()).toList(),
+      'id': id,
+      'is_main_series': isMainSeries,
+      'name': name,
+      'pokemon': pokemon.map((v) => v.toJson()).toList(),
+    };
   }
 }
 
 class EffectEntries {
-  String effect;
-  Language language;
-  String shortEffect;
+  final String effect;
+  final Language? language;
+  final String shortEffect;
 
-  EffectEntries({this.effect, this.language, this.shortEffect});
+  EffectEntries({
+    this.effect = "",
+    this.language,
+    this.shortEffect = "",
+  });
 
-  EffectEntries.fromJson(Map<String, dynamic> json) {
-    effect = json['effect'];
-    language = json['language'] != null
-        ? new Language.fromJson(json['language'])
-        : null;
-    shortEffect = json['short_effect'];
+  factory EffectEntries.fromJson(Map<String, dynamic> json) {
+    return EffectEntries(
+      effect: json['effect'] ?? "",
+      language:
+          json['language'] != null ? Language.fromJson(json['language']) : null,
+      shortEffect: json['short_effect'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['effect'] = this.effect;
-    if (this.language != null) {
-      data['language'] = this.language.toJson();
-    }
-    data['short_effect'] = this.shortEffect;
-    return data;
+    return {
+      'effect': effect,
+      if (language != null) 'language': language!.toJson(),
+      'short_effect': shortEffect,
+    };
   }
 }
 
 class Language {
-  String name;
-  String url;
+  final String name;
+  final String url;
 
-  Language({this.name, this.url});
+  Language({this.name = "", this.url = ""});
 
-  Language.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
+  factory Language.fromJson(Map<String, dynamic> json) {
+    return Language(
+      name: json['name'] ?? "",
+      url: json['url'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    return data;
+    return {
+      'name': name,
+      'url': url,
+    };
   }
 }
 
 class Pokemon {
-  Language pokemon;
+  final Language? pokemon;
 
   Pokemon({this.pokemon});
 
-  Pokemon.fromJson(Map<String, dynamic> json) {
-    pokemon =
-        json['pokemon'] != null ? new Language.fromJson(json['pokemon']) : null;
+  factory Pokemon.fromJson(Map<String, dynamic> json) {
+    return Pokemon(
+      pokemon:
+          json['pokemon'] != null ? Language.fromJson(json['pokemon']) : null,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.pokemon != null) {
-      data['pokemon'] = this.pokemon.toJson();
-    }
-    return data;
+    return {
+      if (pokemon != null) 'pokemon': pokemon!.toJson(),
+    };
   }
 }

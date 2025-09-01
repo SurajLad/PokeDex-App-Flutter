@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_pokedex/Helpers/responsive_helper.dart';
@@ -16,11 +15,11 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     scheduleMicrotask(() async {
       await AppImages.preCacheAssets(context);
-      // Timer(Duration(milliseconds: 2800), () {
-      //   Get.off(
-      //     HomePage(),
-      //   );
-      // });
+      Timer(Duration(milliseconds: 2800), () {
+        Get.off(
+          HomePage(),
+        );
+      });
     });
 
     super.initState();
@@ -28,19 +27,26 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    ResponsiveHelper();
-    ResponsiveHelper.instance.width = Get.width;
-    ResponsiveHelper.instance.height = Get.height;
-    ResponsiveHelper.instance.fontSize = Get.width > 300 ? 18 : 16;
-    ResponsiveHelper.instance.titleFontSize = Get.width > 300 ? 22 : 20;
-    return SplashScreen.navigate(
-      backgroundColor: Colors.white,
-      name: 'assets/poke_splash.flr',
-      height: Get.height,
-      next: (_) => HomePage(),
-      until: () => Future.delayed(Duration(seconds: 2)),
-      startAnimation: 'idle',
-      fit: BoxFit.fitHeight,
+    ResponsiveHelper(
+        width: Get.width, height: Get.height, fontSize: 18, titleFontSize: 22);
+
+    // return SplashScreen.navigate(
+    //   backgroundColor: Colors.white,
+    //   name: 'assets/poke_splash.flr',
+    //   height: Get.height,
+    //   next: (_) => HomePage(),
+    //   until: () => Future.delayed(Duration(seconds: 2)),
+    //   startAnimation: 'idle',
+    //   fit: BoxFit.fitHeight,
+    // );
+    return Scaffold(
+      body: Center(
+        child: Image.asset(
+          'assets/poke_ball.png',
+          height: 200,
+          width: 200,
+        ),
+      ),
     );
   }
 }

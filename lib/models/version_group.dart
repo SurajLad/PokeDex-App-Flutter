@@ -1,20 +1,20 @@
 class VersionGroup {
-	String name;
-	String url;
+  String name;
+  String url;
 
-	VersionGroup({this.name, this.url});
+  VersionGroup({required this.name, required this.url});
 
-	factory VersionGroup.fromJson(Map<String, dynamic> json) {
-		return VersionGroup(
-			name: json['name'] as String,
-			url: json['url'] as String,
-		);
-	}
+  factory VersionGroup.fromJson(Map<String, dynamic> json) {
+    return VersionGroup(
+      name: json['name'] as String,
+      url: json['url'] as String,
+    );
+  }
 
-	Map<String, dynamic> toJson() {
-		return {
-			'name': name,
-			'url': url,
-		};
-	}
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'url': url,
+    };
+  }
 }

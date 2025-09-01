@@ -1,148 +1,145 @@
 class MoveDetail {
-  int accuracy;
-  ContestType contestType;
-  ContestType damageClass;
-  int id;
-  List<LearnedByPokemon> learnedByPokemon;
-  Meta meta;
-  String name;
-  int power;
-  int pp;
-  int priority;
-  ContestType type;
+  final int? accuracy;
+  final ContestType? contestType;
+  final ContestType? damageClass;
+  final int id;
+  final List<LearnedByPokemon> learnedByPokemon;
+  final Meta? meta;
+  final String name;
+  final int? power;
+  final int? pp;
+  final int? priority;
+  final ContestType? type;
 
-  MoveDetail(
-      {this.accuracy,
-      this.contestType,
-      this.damageClass,
-      this.id,
-      this.learnedByPokemon,
-      this.meta,
-      this.name,
-      this.power,
-      this.pp,
-      this.priority,
-      this.type});
+  MoveDetail({
+    this.accuracy,
+    this.contestType,
+    this.damageClass,
+    this.id = 0,
+    this.learnedByPokemon = const [],
+    this.meta,
+    this.name = "",
+    this.power,
+    this.pp,
+    this.priority,
+    this.type,
+  });
 
-  MoveDetail.fromJson(Map<String, dynamic> json) {
-    accuracy = json['accuracy'];
-    contestType = json['contest_type'] != null
-        ? new ContestType.fromJson(json['contest_type'])
-        : null;
-    damageClass = json['damage_class'] != null
-        ? new ContestType.fromJson(json['damage_class'])
-        : null;
-    id = json['id'];
-    if (json['learned_by_pokemon'] != null) {
-      learnedByPokemon = <LearnedByPokemon>[];
-      json['learned_by_pokemon'].forEach((v) {
-        learnedByPokemon.add(new LearnedByPokemon.fromJson(v));
-      });
-    }
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-    name = json['name'];
-    power = json['power'];
-    pp = json['pp'];
-    priority = json['priority'];
-    type = json['type'] != null ? new ContestType.fromJson(json['type']) : null;
+  factory MoveDetail.fromJson(Map<String, dynamic> json) {
+    return MoveDetail(
+      accuracy: json['accuracy'],
+      contestType: json['contest_type'] != null
+          ? ContestType.fromJson(json['contest_type'])
+          : null,
+      damageClass: json['damage_class'] != null
+          ? ContestType.fromJson(json['damage_class'])
+          : null,
+      id: json['id'] ?? 0,
+      learnedByPokemon: (json['learned_by_pokemon'] as List<dynamic>?)
+              ?.map((v) => LearnedByPokemon.fromJson(v))
+              .toList() ??
+          [],
+      meta: json['meta'] != null ? Meta.fromJson(json['meta']) : null,
+      name: json['name'] ?? "",
+      power: json['power'],
+      pp: json['pp'],
+      priority: json['priority'],
+      type: json['type'] != null ? ContestType.fromJson(json['type']) : null,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['accuracy'] = this.accuracy;
-    if (this.contestType != null) {
-      data['contest_type'] = this.contestType.toJson();
-    }
-    if (this.damageClass != null) {
-      data['damage_class'] = this.damageClass.toJson();
-    }
-    data['id'] = this.id;
-    if (this.learnedByPokemon != null) {
-      data['learned_by_pokemon'] =
-          this.learnedByPokemon.map((v) => v.toJson()).toList();
-    }
-    if (this.meta != null) {
-      data['meta'] = this.meta.toJson();
-    }
-    data['name'] = this.name;
-    data['power'] = this.power;
-    data['pp'] = this.pp;
-    data['priority'] = this.priority;
-    if (this.type != null) {
-      data['type'] = this.type.toJson();
-    }
-    return data;
+    return {
+      'accuracy': accuracy,
+      if (contestType != null) 'contest_type': contestType!.toJson(),
+      if (damageClass != null) 'damage_class': damageClass!.toJson(),
+      'id': id,
+      'learned_by_pokemon': learnedByPokemon.map((v) => v.toJson()).toList(),
+      if (meta != null) 'meta': meta!.toJson(),
+      'name': name,
+      'power': power,
+      'pp': pp,
+      'priority': priority,
+      if (type != null) 'type': type!.toJson(),
+    };
   }
 }
 
 class ContestType {
-  String name;
+  final String name;
 
-  ContestType({this.name});
+  ContestType({this.name = ""});
 
-  ContestType.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+  factory ContestType.fromJson(Map<String, dynamic> json) {
+    return ContestType(
+      name: json['name'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    return data;
+    return {
+      'name': name,
+    };
   }
 }
 
 class LearnedByPokemon {
-  String name;
-  String url;
+  final String name;
+  final String url;
 
-  LearnedByPokemon({this.name, this.url});
+  LearnedByPokemon({this.name = "", this.url = ""});
 
-  LearnedByPokemon.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
+  factory LearnedByPokemon.fromJson(Map<String, dynamic> json) {
+    return LearnedByPokemon(
+      name: json['name'] ?? "",
+      url: json['url'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    return data;
+    return {
+      'name': name,
+      'url': url,
+    };
   }
 }
 
 class Meta {
-  int ailmentChance;
-  int critRate;
-  int drain;
-  int flinchChance;
-  int healing;
-  int statChance;
+  final int? ailmentChance;
+  final int? critRate;
+  final int? drain;
+  final int? flinchChance;
+  final int? healing;
+  final int? statChance;
 
-  Meta(
-      {this.ailmentChance,
-      this.critRate,
-      this.drain,
-      this.flinchChance,
-      this.healing,
-      this.statChance});
+  Meta({
+    this.ailmentChance,
+    this.critRate,
+    this.drain,
+    this.flinchChance,
+    this.healing,
+    this.statChance,
+  });
 
-  Meta.fromJson(Map<String, dynamic> json) {
-    ailmentChance = json['ailment_chance'];
-    critRate = json['crit_rate'];
-    drain = json['drain'];
-    flinchChance = json['flinch_chance'];
-    healing = json['healing'];
-    statChance = json['stat_chance'];
+  factory Meta.fromJson(Map<String, dynamic> json) {
+    return Meta(
+      ailmentChance: json['ailment_chance'],
+      critRate: json['crit_rate'],
+      drain: json['drain'],
+      flinchChance: json['flinch_chance'],
+      healing: json['healing'],
+      statChance: json['stat_chance'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['ailment_chance'] = this.ailmentChance;
-    data['crit_rate'] = this.critRate;
-    data['drain'] = this.drain;
-    data['flinch_chance'] = this.flinchChance;
-    data['healing'] = this.healing;
-    data['stat_chance'] = this.statChance;
-    return data;
+    return {
+      'ailment_chance': ailmentChance,
+      'crit_rate': critRate,
+      'drain': drain,
+      'flinch_chance': flinchChance,
+      'healing': healing,
+      'stat_chance': statChance,
+    };
   }
 }

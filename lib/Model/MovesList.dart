@@ -1,50 +1,55 @@
 class MovesList {
-  int count;
-  String next;
-  String previous;
-  List<Results> results;
+  final int count;
+  final String? next;
+  final String? previous;
+  final List<Result> results;
 
-  MovesList({this.count, this.next, this.previous, this.results});
+  MovesList({
+    this.count = 0,
+    this.next,
+    this.previous,
+    this.results = const [],
+  });
 
-  MovesList.fromJson(Map<String, dynamic> json) {
-    count = json['count'];
-    next = json['next'];
-    previous = json['previous'];
-    if (json['results'] != null) {
-      results = <Results>[];
-      json['results'].forEach((v) {
-        results.add(new Results.fromJson(v));
-      });
-    }
+  factory MovesList.fromJson(Map<String, dynamic> json) {
+    return MovesList(
+      count: json['count'] ?? 0,
+      next: json['next'],
+      previous: json['previous'],
+      results: (json['results'] as List<dynamic>?)
+              ?.map((v) => Result.fromJson(v))
+              .toList() ??
+          [],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['count'] = this.count;
-    data['next'] = this.next;
-    data['previous'] = this.previous;
-    if (this.results != null) {
-      data['results'] = this.results.map((v) => v.toJson()).toList();
-    }
-    return data;
+    return {
+      'count': count,
+      'next': next,
+      'previous': previous,
+      'results': results.map((v) => v.toJson()).toList(),
+    };
   }
 }
 
-class Results {
-  String name;
-  String url;
+class Result {
+  final String name;
+  final String url;
 
-  Results({this.name, this.url});
+  Result({this.name = "", this.url = ""});
 
-  Results.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
+  factory Result.fromJson(Map<String, dynamic> json) {
+    return Result(
+      name: json['name'] ?? "",
+      url: json['url'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    return data;
+    return {
+      'name': name,
+      'url': url,
+    };
   }
 }
