@@ -1,202 +1,190 @@
 class ItemDetail {
-  List<Attributes> attributes;
-  Attributes category;
-  int cost;
-  List<EffectEntries> effectEntries;
-  String flingEffect;
-  int flingPower;
-  int id;
-  String name;
-  Sprites sprites;
+  final List<Attributes> attributes;
+  final Attributes? category;
+  final int cost;
+  final List<EffectEntries> effectEntries;
+  final String? flingEffect;
+  final int flingPower;
+  final int id;
+  final String name;
+  final Sprites? sprites;
 
-  ItemDetail(
-      {this.attributes,
-      this.category,
-      this.cost,
-      this.effectEntries,
-      this.flingEffect,
-      this.flingPower,
-      this.id,
-      this.name,
-      this.sprites});
+  ItemDetail({
+    this.attributes = const [],
+    this.category,
+    this.cost = 0,
+    this.effectEntries = const [],
+    this.flingEffect,
+    this.flingPower = 0,
+    this.id = 0,
+    this.name = "",
+    this.sprites,
+  });
 
-  ItemDetail.fromJson(Map<String, dynamic> json) {
-    if (json['attributes'] != null) {
-      attributes = <Attributes>[];
-      json['attributes'].forEach((v) {
-        attributes.add(new Attributes.fromJson(v));
-      });
-    }
-    category = json['category'] != null
-        ? new Attributes.fromJson(json['category'])
-        : null;
-    cost = json['cost'];
-    if (json['effect_entries'] != null) {
-      effectEntries = <EffectEntries>[];
-      json['effect_entries'].forEach((v) {
-        effectEntries.add(new EffectEntries.fromJson(v));
-      });
-    }
-    flingEffect = json['fling_effect'.toString()];
-    flingPower = json['fling_power'];
-    id = json['id'];
-    name = json['name'];
-    sprites =
-        json['sprites'] != null ? new Sprites.fromJson(json['sprites']) : null;
+  factory ItemDetail.fromJson(Map<String, dynamic> json) {
+    return ItemDetail(
+      attributes: (json['attributes'] as List<dynamic>?)
+              ?.map((v) => Attributes.fromJson(v))
+              .toList() ??
+          [],
+      category: json['category'] != null
+          ? Attributes.fromJson(json['category'])
+          : null,
+      cost: json['cost'] ?? 0,
+      effectEntries: (json['effect_entries'] as List<dynamic>?)
+              ?.map((v) => EffectEntries.fromJson(v))
+              .toList() ??
+          [],
+      flingEffect: json['fling_effect'],
+      flingPower: json['fling_power'] ?? 0,
+      id: json['id'] ?? 0,
+      name: json['name'] ?? "",
+      sprites:
+          json['sprites'] != null ? Sprites.fromJson(json['sprites']) : null,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.attributes != null) {
-      data['attributes'] = this.attributes.map((v) => v.toJson()).toList();
-    }
-    if (this.category != null) {
-      data['category'] = this.category.toJson();
-    }
-    data['cost'] = this.cost;
-    if (this.effectEntries != null) {
-      data['effect_entries'] =
-          this.effectEntries.map((v) => v.toJson()).toList();
-    }
-    data['fling_effect'] = this.flingEffect;
-    data['fling_power'] = this.flingPower;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    if (this.sprites != null) {
-      data['sprites'] = this.sprites.toJson();
-    }
-    return data;
+    return {
+      'attributes': attributes.map((v) => v.toJson()).toList(),
+      if (category != null) 'category': category!.toJson(),
+      'cost': cost,
+      'effect_entries': effectEntries.map((v) => v.toJson()).toList(),
+      'fling_effect': flingEffect,
+      'fling_power': flingPower,
+      'id': id,
+      'name': name,
+      if (sprites != null) 'sprites': sprites!.toJson(),
+    };
   }
 }
 
 class Attributes {
-  String name;
-  String url;
+  final String name;
+  final String url;
 
-  Attributes({this.name, this.url});
+  Attributes({this.name = "", this.url = ""});
 
-  Attributes.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
+  factory Attributes.fromJson(Map<String, dynamic> json) {
+    return Attributes(
+      name: json['name'] ?? "",
+      url: json['url'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['url'] = this.url;
-    return data;
+    return {
+      'name': name,
+      'url': url,
+    };
   }
 }
 
 class EffectEntries {
-  String effect;
-  Attributes language;
-  String shortEffect;
+  final String effect;
+  final Attributes? language;
+  final String shortEffect;
 
-  EffectEntries({this.effect, this.language, this.shortEffect});
+  EffectEntries({
+    this.effect = "",
+    this.language,
+    this.shortEffect = "",
+  });
 
-  EffectEntries.fromJson(Map<String, dynamic> json) {
-    effect = json['effect'];
-    language = json['language'] != null
-        ? new Attributes.fromJson(json['language'])
-        : null;
-    shortEffect = json['short_effect'];
+  factory EffectEntries.fromJson(Map<String, dynamic> json) {
+    return EffectEntries(
+      effect: json['effect'] ?? "",
+      language: json['language'] != null
+          ? Attributes.fromJson(json['language'])
+          : null,
+      shortEffect: json['short_effect'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['effect'] = this.effect;
-    if (this.language != null) {
-      data['language'] = this.language.toJson();
-    }
-    data['short_effect'] = this.shortEffect;
-    return data;
+    return {
+      'effect': effect,
+      if (language != null) 'language': language!.toJson(),
+      'short_effect': shortEffect,
+    };
   }
 }
 
 class Sprites {
-  String url;
+  final String url;
 
-  Sprites({this.url});
+  Sprites({this.url = ""});
 
-  Sprites.fromJson(Map<String, dynamic> json) {
-    url = json['default'];
+  factory Sprites.fromJson(Map<String, dynamic> json) {
+    return Sprites(
+      url: json['default'] ?? "",
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['default'] = this.url;
-    return data;
+    return {
+      'default': url,
+    };
   }
 }
 
 class Item {
-  List<Attributes> attributes;
-  Attributes category;
-  int cost;
-  List<EffectEntries> effectEntries;
-  Null flingEffect;
-  int flingPower;
-  int id;
-  String name;
-  Sprites sprites;
+  final List<Attributes> attributes;
+  final Attributes? category;
+  final int cost;
+  final List<EffectEntries> effectEntries;
+  final String? flingEffect;
+  final int flingPower;
+  final int id;
+  final String name;
+  final Sprites? sprites;
 
-  Item(
-      {this.attributes,
-      this.category,
-      this.cost,
-      this.effectEntries,
-      this.flingEffect,
-      this.flingPower,
-      this.id,
-      this.name,
-      this.sprites});
+  Item({
+    this.attributes = const [],
+    this.category,
+    this.cost = 0,
+    this.effectEntries = const [],
+    this.flingEffect,
+    this.flingPower = 0,
+    this.id = 0,
+    this.name = "",
+    this.sprites,
+  });
 
-  Item.fromJson(Map<String, dynamic> json) {
-    if (json['attributes'] != null) {
-      attributes = <Attributes>[];
-      json['attributes'].forEach((v) {
-        attributes.add(new Attributes.fromJson(v));
-      });
-    }
-    category = json['category'] != null
-        ? new Attributes.fromJson(json['category'])
-        : null;
-    cost = json['cost'];
-    if (json['effect_entries'] != null) {
-      effectEntries = <EffectEntries>[];
-      json['effect_entries'].forEach((v) {
-        effectEntries.add(new EffectEntries.fromJson(v));
-      });
-    }
-    flingEffect = json['fling_effect'];
-    flingPower = json['fling_power'];
-    id = json['id'];
-    name = json['name'];
-    sprites =
-        json['sprites'] != null ? new Sprites.fromJson(json['sprites']) : null;
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
+      attributes: (json['attributes'] as List<dynamic>?)
+              ?.map((v) => Attributes.fromJson(v))
+              .toList() ??
+          [],
+      category: json['category'] != null
+          ? Attributes.fromJson(json['category'])
+          : null,
+      cost: json['cost'] ?? 0,
+      effectEntries: (json['effect_entries'] as List<dynamic>?)
+              ?.map((v) => EffectEntries.fromJson(v))
+              .toList() ??
+          [],
+      flingEffect: json['fling_effect'],
+      flingPower: json['fling_power'] ?? 0,
+      id: json['id'] ?? 0,
+      name: json['name'] ?? "",
+      sprites:
+          json['sprites'] != null ? Sprites.fromJson(json['sprites']) : null,
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.attributes != null) {
-      data['attributes'] = this.attributes.map((v) => v.toJson()).toList();
-    }
-    if (this.category != null) {
-      data['category'] = this.category.toJson();
-    }
-    data['cost'] = this.cost;
-    if (this.effectEntries != null) {
-      data['effect_entries'] =
-          this.effectEntries.map((v) => v.toJson()).toList();
-    }
-    data['fling_effect'] = this.flingEffect;
-    data['fling_power'] = this.flingPower;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    if (this.sprites != null) {
-      data['sprites'] = this.sprites.toJson();
-    }
-    return data;
+    return {
+      'attributes': attributes.map((v) => v.toJson()).toList(),
+      if (category != null) 'category': category!.toJson(),
+      'cost': cost,
+      'effect_entries': effectEntries.map((v) => v.toJson()).toList(),
+      'fling_effect': flingEffect,
+      'fling_power': flingPower,
+      'id': id,
+      'name': name,
+      if (sprites != null) 'sprites': sprites!.toJson(),
+    };
   }
 }

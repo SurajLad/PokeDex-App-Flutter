@@ -1,20 +1,20 @@
 class Move {
-	String name;
-	String url;
+  String name;
+  String url;
 
-	Move({this.name, this.url});
+  Move({required this.name, required this.url});
 
-	factory Move.fromJson(Map<String, dynamic> json) {
-		return Move(
-			name: json['name'] as String,
-			url: json['url'] as String,
-		);
-	}
+  factory Move.fromJson(Map<String, dynamic> json) {
+    return Move(
+      name: json['name'] as String,
+      url: json['url'] as String,
+    );
+  }
 
-	Map<String, dynamic> toJson() {
-		return {
-			'name': name,
-			'url': url,
-		};
-	}
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'url': url,
+    };
+  }
 }

@@ -12,66 +12,80 @@ String pokemonToJson(List<Pokemon> data) =>
 
 class Pokemon {
   Pokemon({
-    this.dex,
-    this.name,
+    required this.dex,
+    required this.name,
     this.animationTime,
-    this.height,
-    this.weight,
-    this.maxCp,
+    required this.height,
+    required this.weight,
+    required this.maxCp,
     this.buddySize,
-    this.types,
+    required this.types,
     this.encounter,
     this.evolution,
-    this.id,
+    required this.id,
     this.rarity,
   });
 
   int dex;
   String name;
-  List<double> animationTime;
+  List<double>? animationTime;
   double height;
   double weight;
   int maxCp;
-  BuddySize buddySize;
+  BuddySize? buddySize;
   List<BuddySize> types;
-  Encounter encounter;
-  Evolution evolution;
+  Encounter? encounter;
+  Evolution? evolution;
   String id;
-  BuddySize rarity;
+  BuddySize? rarity;
 
   factory Pokemon.fromJson(Map<String, dynamic> json) => Pokemon(
         dex: json["dex"],
         name: json["name"],
-        height: json["height"].toDouble(),
-        weight: json["weight"].toDouble(),
-        maxCp: json["maxCP"],
+        animationTime: json["animationTime"] == null
+            ? null
+            : List<double>.from(json["animationTime"].map((x) => x.toDouble())),
+        height: (json["height"] ?? 0).toDouble(),
+        weight: (json["weight"] ?? 0).toDouble(),
+        maxCp: json["maxCP"] ?? 0,
+        buddySize: json["buddySize"] == null
+            ? null
+            : BuddySize.fromJson(json["buddySize"]),
         types: List<BuddySize>.from(
             json["types"].map((x) => BuddySize.fromJson(x))),
-        encounter: Encounter.fromJson(json["encounter"]),
-        evolution: Evolution.fromJson(json["evolution"]),
+        encounter: json["encounter"] == null
+            ? null
+            : Encounter.fromJson(json["encounter"]),
+        evolution: json["evolution"] == null
+            ? null
+            : Evolution.fromJson(json["evolution"]),
         id: json["id"],
+        rarity:
+            json["rarity"] == null ? null : BuddySize.fromJson(json["rarity"]),
       );
 
   Map<String, dynamic> toJson() => {
         "dex": dex,
         "name": name,
-        "animationTime": List<dynamic>.from(animationTime.map((x) => x)),
+        "animationTime": animationTime == null
+            ? null
+            : List<dynamic>.from(animationTime!.map((x) => x)),
         "height": height,
         "weight": weight,
         "maxCP": maxCp,
-        "buddySize": buddySize.toJson(),
+        "buddySize": buddySize?.toJson(),
         "types": List<dynamic>.from(types.map((x) => x.toJson())),
-        "encounter": encounter.toJson(),
-        "evolution": evolution.toJson(),
+        "encounter": encounter?.toJson(),
+        "evolution": evolution?.toJson(),
         "id": id,
-        "rarity": rarity == null ? null : rarity.toJson(),
+        "rarity": rarity?.toJson(),
       };
 }
 
 class BuddySize {
   BuddySize({
-    this.id,
-    this.name,
+    required this.id,
+    required this.name,
   });
 
   String id;
@@ -93,29 +107,29 @@ class Encounter {
     this.gender,
   });
 
-  Gender gender;
+  Gender? gender;
 
   factory Encounter.fromJson(Map<String, dynamic> json) => Encounter(
         gender: json["gender"] == null ? null : Gender.fromJson(json["gender"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "gender": gender == null ? null : gender.toJson(),
+        "gender": gender?.toJson(),
       };
 }
 
 class Gender {
   Gender({
-    this.malePercent,
-    this.femalePercent,
+    required this.malePercent,
+    required this.femalePercent,
   });
 
   double malePercent;
   double femalePercent;
 
   factory Gender.fromJson(Map<String, dynamic> json) => Gender(
-        malePercent: json["malePercent"].toDouble(),
-        femalePercent: json["femalePercent"].toDouble(),
+        malePercent: (json["malePercent"] ?? 0).toDouble(),
+        femalePercent: (json["femalePercent"] ?? 0).toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -130,8 +144,8 @@ class Evolution {
     this.pastBranch,
   });
 
-  List<FutureBranch> futureBranches;
-  Branch pastBranch;
+  List<FutureBranch>? futureBranches;
+  Branch? pastBranch;
 
   factory Evolution.fromJson(Map<String, dynamic> json) => Evolution(
         futureBranches: json["futureBranches"] == null
@@ -146,21 +160,21 @@ class Evolution {
   Map<String, dynamic> toJson() => {
         "futureBranches": futureBranches == null
             ? null
-            : List<dynamic>.from(futureBranches.map((x) => x.toJson())),
-        "pastBranch": pastBranch == null ? null : pastBranch.toJson(),
+            : List<dynamic>.from(futureBranches!.map((x) => x.toJson())),
+        "pastBranch": pastBranch?.toJson(),
       };
 }
 
 class FutureBranch {
   FutureBranch({
-    this.name,
-    this.id,
+    required this.name,
+    required this.id,
     this.futureBranches,
   });
 
   String name;
   String id;
-  List<Branch> futureBranches;
+  List<Branch>? futureBranches;
 
   factory FutureBranch.fromJson(Map<String, dynamic> json) => FutureBranch(
         name: json["name"],
@@ -176,22 +190,22 @@ class FutureBranch {
         "id": id,
         "futureBranches": futureBranches == null
             ? null
-            : List<dynamic>.from(futureBranches.map((x) => x.toJson())),
+            : List<dynamic>.from(futureBranches!.map((x) => x.toJson())),
       };
 }
 
 class Branch {
   Branch({
-    this.name,
-    this.id,
+    required this.name,
+    required this.id,
     this.costToEvolve,
     this.pastBranch,
   });
 
   String name;
   String id;
-  PastBranchCostToEvolve costToEvolve;
-  BuddySize pastBranch;
+  PastBranchCostToEvolve? costToEvolve;
+  BuddySize? pastBranch;
 
   factory Branch.fromJson(Map<String, dynamic> json) => Branch(
         name: json["name"],
@@ -207,23 +221,23 @@ class Branch {
   Map<String, dynamic> toJson() => {
         "name": name,
         "id": id,
-        "costToEvolve": costToEvolve == null ? null : costToEvolve.toJson(),
-        "pastBranch": pastBranch == null ? null : pastBranch.toJson(),
+        "costToEvolve": costToEvolve?.toJson(),
+        "pastBranch": pastBranch?.toJson(),
       };
 }
 
 class PastBranchCostToEvolve {
   PastBranchCostToEvolve({
-    this.candyCost,
+    required this.candyCost,
     this.evolutionItem,
   });
 
   int candyCost;
-  BuddySize evolutionItem;
+  BuddySize? evolutionItem;
 
   factory PastBranchCostToEvolve.fromJson(Map<String, dynamic> json) =>
       PastBranchCostToEvolve(
-        candyCost: json["candyCost"],
+        candyCost: json["candyCost"] ?? 0,
         evolutionItem: json["evolutionItem"] == null
             ? null
             : BuddySize.fromJson(json["evolutionItem"]),
@@ -231,6 +245,6 @@ class PastBranchCostToEvolve {
 
   Map<String, dynamic> toJson() => {
         "candyCost": candyCost,
-        "evolutionItem": evolutionItem == null ? null : evolutionItem.toJson(),
+        "evolutionItem": evolutionItem?.toJson(),
       };
 }
