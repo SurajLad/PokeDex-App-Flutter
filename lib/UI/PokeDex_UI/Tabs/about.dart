@@ -11,7 +11,7 @@ class AboutTab extends StatelessWidget {
   final Pokemon pokemon;
   final PokemonController pokemonController = Get.find<PokemonController>();
 
-  AboutTab({this.pokemon});
+  AboutTab({required this.pokemon});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class AboutTab extends StatelessWidget {
               ? Column(
                   children: [
                     const SizedBox(height: 10),
-                    pokemon.encounter.gender != null
+                    pokemon.encounter?.gender != null
                         ? Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -44,7 +44,9 @@ class AboutTab extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
-                                      (pokemon.encounter.gender.malePercent *
+                                      ((pokemon.encounter?.gender
+                                                          ?.malePercent ??
+                                                      0) *
                                                   100)
                                               .toString() +
                                           "%",
@@ -56,7 +58,9 @@ class AboutTab extends StatelessWidget {
                                       color: Color(0xFFd68998),
                                     ),
                                     Text(
-                                      (pokemon.encounter.gender.femalePercent *
+                                      ((pokemon.encounter?.gender
+                                                          ?.femalePercent ??
+                                                      0) *
                                                   100)
                                               .toString() +
                                           "%",
@@ -71,8 +75,11 @@ class AboutTab extends StatelessWidget {
                     const SizedBox(height: 15),
                     buildAboutInformation("MaxCP", pokemon.maxCp.toString()),
                     const SizedBox(height: 15),
-                    buildAboutInformation("Base XP",
-                        pokemonController.pokemonAPI.baseExperience.toString()),
+                    buildAboutInformation(
+                        "Base XP",
+                        pokemonController.pokemonAPI?.baseExperience
+                                ?.toString() ??
+                            ''),
                     const SizedBox(height: 15),
                     buildAboutInformation(
                         "Weight", pokemon.weight.toString() + " (kg)"),

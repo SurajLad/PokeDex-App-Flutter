@@ -13,17 +13,17 @@ class EvolutionTab extends StatelessWidget {
   final PokemonController pokemonController = Get.find<PokemonController>();
   final HomeController homeController = Get.find<HomeController>();
 
-  EvolutionTab({this.pokemon});
+  EvolutionTab({required this.pokemon});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20),
-      child: pokemon.evolution.futureBranches != null
+      child: pokemon.evolution?.futureBranches != null
           ? ListView.builder(
               physics: AlwaysScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: pokemon.evolution.futureBranches.length,
+              itemCount: pokemon.evolution?.futureBranches?.length,
               itemBuilder: (context, index) {
                 return Container(
                   child: Column(
@@ -59,11 +59,13 @@ class EvolutionTab extends StatelessWidget {
                               ],
                             ),
                             buildAvatarWithName(
-                                name: pokemon
-                                    .evolution.futureBranches[index].name,
+                                name: pokemon.evolution?.futureBranches?[index]
+                                        .name ??
+                                    '',
                                 urlIndex: getDexFromName(
-                                        pokemon.evolution.futureBranches[index]
-                                            .name,
+                                        pokemon.evolution
+                                                ?.futureBranches?[index].name ??
+                                            '',
                                         homeController.pokemonList)
                                     .toString()),
                           ],
@@ -86,7 +88,7 @@ class EvolutionTab extends StatelessWidget {
     );
   }
 
-  Column buildAvatarWithName({String urlIndex, String name}) {
+  Column buildAvatarWithName({required String urlIndex, required String name}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -124,12 +126,12 @@ class EvolutionTab extends StatelessWidget {
   }
 
   Widget buildFutureEvolutions(int index) {
-    if (pokemon.evolution.futureBranches[index].futureBranches != null) {
+    if (pokemon.evolution?.futureBranches?[index].futureBranches != null) {
       return Expanded(
         child: ListView.builder(
           physics: AlwaysScrollableScrollPhysics(),
           itemCount:
-              pokemon.evolution.futureBranches[index].futureBranches.length,
+              pokemon.evolution?.futureBranches?[index].futureBranches?.length,
           itemBuilder: (context, inIndex) {
             return Container(
               padding: const EdgeInsets.fromLTRB(12.0, 10.0, 12.0, 10.0),
@@ -146,8 +148,11 @@ class EvolutionTab extends StatelessWidget {
                           url:
                               "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" +
                                   getDexFromName(
-                                          pokemon.evolution
-                                              .futureBranches[index].name,
+                                          pokemon
+                                                  .evolution
+                                                  ?.futureBranches?[index]
+                                                  .name ??
+                                              '',
                                           homeController.pokemonList)
                                       .toString() +
                                   ".png",
@@ -169,7 +174,7 @@ class EvolutionTab extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        pokemon.evolution.futureBranches[index].name,
+                        pokemon.evolution?.futureBranches?[index]?.name ?? '',
                         style: AppTextStyle.smallBold,
                       )
                     ],
@@ -202,10 +207,11 @@ class EvolutionTab extends StatelessWidget {
                               "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" +
                                   getDexFromName(
                                           pokemon
-                                              .evolution
-                                              .futureBranches[index]
-                                              .futureBranches[inIndex]
-                                              .name,
+                                                  .evolution
+                                                  ?.futureBranches?[index]
+                                                  .futureBranches?[inIndex]
+                                                  .name ??
+                                              '',
                                           homeController.pokemonList)
                                       .toString() +
                                   ".png",
@@ -227,8 +233,9 @@ class EvolutionTab extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        pokemon.evolution.futureBranches[index]
-                            .futureBranches[inIndex].name,
+                        pokemon.evolution?.futureBranches?[index]
+                                .futureBranches?[inIndex].name ??
+                            '',
                         style: AppTextStyle.smallBold,
                       )
                     ],

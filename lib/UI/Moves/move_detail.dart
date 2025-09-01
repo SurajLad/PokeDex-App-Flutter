@@ -8,13 +8,13 @@ import 'package:my_pokedex/utitliy/constants.dart';
 
 class MoveDetailSheet extends StatefulWidget {
   final String url;
-  MoveDetailSheet({this.url});
+  MoveDetailSheet({required this.url});
   @override
   _MoveDetailSheetState createState() => _MoveDetailSheetState();
 }
 
 class _MoveDetailSheetState extends State<MoveDetailSheet> {
-  MoveDetail moveDetails;
+  MoveDetail? moveDetails;
   @override
   void initState() {
     getMoveDetails();
@@ -37,10 +37,10 @@ class _MoveDetailSheetState extends State<MoveDetailSheet> {
                         padding: const EdgeInsets.fromLTRB(8.0, 8, 18, 8),
                         child: SvgPicture.asset(
                           "assets/pokemon_type_icons/" +
-                              moveDetails.type.name.capitalizeFirst +
+                              (moveDetails?.type?.name.capitalizeFirst ?? '') +
                               ".svg",
                           color: pokemonTypeMap[
-                              moveDetails.type.name.capitalizeFirst],
+                              moveDetails?.type?.name.capitalizeFirst],
                           placeholderBuilder: (context) =>
                               Image.asset('assets/poke_ball.png'),
                           width: 90,
@@ -54,50 +54,54 @@ class _MoveDetailSheetState extends State<MoveDetailSheet> {
                         children: [
                           const SizedBox(height: 20),
                           Text(
-                            moveDetails.name.capitalizeFirst
+                            (moveDetails?.name?.capitalizeFirst ?? '')
                                 .replaceAll('-', " "),
                             style: AppTextStyle.extraLargeBold.copyWith(
                               color: Color(0xFFe94a41),
                             ),
                           ),
                           const SizedBox(height: 25),
-                          buildAboutInformation(
-                              "Type", moveDetails.type.name.capitalizeFirst),
+                          buildAboutInformation("Type",
+                              moveDetails?.type?.name.capitalizeFirst ?? ''),
+                          const SizedBox(height: 5),
+                          buildAboutInformation("Accuracy",
+                              moveDetails?.accuracy?.nullCheck ?? ''),
                           const SizedBox(height: 5),
                           buildAboutInformation(
-                              "Accuracy", moveDetails.accuracy.nullCheck),
+                              "PP", moveDetails?.pp?.toString() ?? ''),
                           const SizedBox(height: 5),
                           buildAboutInformation(
-                              "PP", moveDetails.pp.toString()),
+                              "Power", moveDetails?.power?.nullCheck ?? ''),
                           const SizedBox(height: 5),
-                          buildAboutInformation(
-                              "Power", moveDetails.power.nullCheck),
-                          const SizedBox(height: 5),
-                          buildAboutInformation(
-                              "Priority", moveDetails.priority.nullCheck),
+                          buildAboutInformation("Priority",
+                              moveDetails?.priority?.nullCheck ?? ''),
                           const SizedBox(height: 15),
                           Text(
                             "Other Information",
                             style: AppTextStyle.smallBold,
                           ),
                           const SizedBox(height: 15),
-                          buildAboutInformation("Contest Type",
-                              moveDetails.contestType.name.capitalizeFirst),
-                          const SizedBox(height: 5),
-                          buildAboutInformation("Damage class",
-                              moveDetails.damageClass.name.capitalizeFirst),
-                          const SizedBox(height: 5),
-                          buildAboutInformation("Flinch chance",
-                              moveDetails.meta.flinchChance.nullCheck),
+                          buildAboutInformation(
+                              "Contest Type",
+                              moveDetails?.contestType?.name.capitalizeFirst ??
+                                  ''),
                           const SizedBox(height: 5),
                           buildAboutInformation(
-                              "Healing", moveDetails.meta.healing.nullCheck),
+                              "Damage class",
+                              moveDetails?.damageClass?.name.capitalizeFirst ??
+                                  ''),
+                          const SizedBox(height: 5),
+                          buildAboutInformation("Flinch chance",
+                              moveDetails?.meta?.flinchChance?.nullCheck ?? ''),
+                          const SizedBox(height: 5),
+                          buildAboutInformation("Healing",
+                              moveDetails?.meta?.healing?.nullCheck ?? ''),
                           const SizedBox(height: 5),
                           buildAboutInformation("Stat chance",
-                              moveDetails.meta.statChance.nullCheck),
+                              moveDetails?.meta?.statChance?.nullCheck ?? ''),
                           const SizedBox(height: 5),
                           buildAboutInformation("Crit rate ",
-                              moveDetails.meta.critRate.nullCheck),
+                              moveDetails?.meta?.critRate?.nullCheck ?? ''),
                         ],
                       ),
                     ),

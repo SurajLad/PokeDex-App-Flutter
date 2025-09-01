@@ -51,7 +51,7 @@ class _PokeDexListState extends State<PokeDexList> {
                     Navigator.pop(context);
                   },
                   icon: Icon(
-                    LineIcons.arrow_left,
+                    LineIcons.arrowLeft,
                     color: Color(0xFFe94a41),
                   ),
                   iconSize: 30,

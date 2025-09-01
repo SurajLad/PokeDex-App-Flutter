@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ImageButton(
                       title: "Pokedex",
                       color: const Color(0xFF36996D).withOpacity(0.9),
-                      function: () {
+                      onTap: () {
                         Get.toNamed(Routes.POKEDEX);
                       },
                       imgUrl: "assets/poke_ball.png",
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ImageButton(
                       title: "Moves",
                       color: const Color(0xFFC73B37).withOpacity(0.9),
-                      function: () {
+                      onTap: () {
                         Get.to(
                           ListPage(
                             url: "https://pokeapi.co/api/v2/move/",
@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ImageButton(
                       title: "Abilities",
                       color: const Color(0xFFEDA926).withOpacity(0.9),
-                      function: () {
+                      onTap: () {
                         Get.to(
                           ListPage(
                             url: "https://pokeapi.co/api/v2/ability/",
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ImageButton(
                       title: "Items",
                       color: const Color(0xFF2E6DD5).withOpacity(0.9),
-                      function: () {
+                      onTap: () {
                         Get.to(
                           ListPage(
                             url: "https://pokeapi.co/api/v2/item/",
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ImageButton(
                       title: "Region",
                       color: const Color(0xFF4F1091).withOpacity(0.9),
-                      function: () {
+                      onTap: () {
                         Get.to(
                           ListPage(
                             url: "https://pokeapi.co/api/v2/region/",
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ImageButton(
                       title: "Type",
                       color: const Color(0xFF4C2E3C).withOpacity(0.9),
-                      function: () {
+                      onTap: () {
                         Get.to(
                           ListPage(
                             url: "https://pokeapi.co/api/v2/type/",

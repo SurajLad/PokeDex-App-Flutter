@@ -8,13 +8,13 @@ import 'package:my_pokedex/utitliy/constants.dart';
 
 class ItemDetailSheet extends StatefulWidget {
   final String url;
-  ItemDetailSheet({this.url});
+  ItemDetailSheet({required this.url});
   @override
   _ItemDetailSheetState createState() => _ItemDetailSheetState();
 }
 
 class _ItemDetailSheetState extends State<ItemDetailSheet> {
-  ItemDetail itemDetail;
+  ItemDetail? itemDetail;
   String description = "";
 
   @override
@@ -39,7 +39,8 @@ class _ItemDetailSheetState extends State<ItemDetailSheet> {
                   children: [
                     const SizedBox(height: 20),
                     Text(
-                      itemDetail.name.capitalizeFirst.replaceAll('-', " "),
+                      itemDetail?.name.capitalizeFirst ??
+                          ''.replaceAll('-', " "),
                       style: AppTextStyle.extraLargeBold
                           .copyWith(color: Color(0xFFe94a41)),
                     ),
@@ -59,7 +60,7 @@ class _ItemDetailSheetState extends State<ItemDetailSheet> {
                       height: 30,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: itemDetail.attributes.length,
+                        itemCount: itemDetail?.attributes.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
                             margin: const EdgeInsets.only(right: 12.0),
@@ -70,7 +71,7 @@ class _ItemDetailSheetState extends State<ItemDetailSheet> {
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              itemDetail.attributes[index].name
+                              itemDetail!.attributes[index].name
                                   .replaceAll("-", " ")
                                   .capitalizeFirst,
                               style: AppTextStyle.smallBold
@@ -83,18 +84,18 @@ class _ItemDetailSheetState extends State<ItemDetailSheet> {
                     const SizedBox(height: 20),
                     buildAboutInformation(
                         "Category",
-                        itemDetail.category.name.capitalizeFirst
+                        itemDetail!.category!.name.capitalizeFirst
                             .replaceAll("-", " ")),
                     const SizedBox(height: 8),
-                    buildAboutInformation("Cost", itemDetail.cost.toString()),
+                    buildAboutInformation("Cost", itemDetail!.cost.toString()),
                     const SizedBox(height: 8),
                     buildAboutInformation(
-                        "Fling Effect", itemDetail.flingEffect ?? "N/A"),
+                        "Fling Effect", itemDetail!.flingEffect ?? "N/A"),
                     const SizedBox(height: 8),
                     buildAboutInformation(
                         "Fling Power",
-                        itemDetail.flingPower != null
-                            ? itemDetail.flingPower.toString()
+                        itemDetail!.flingPower != null
+                            ? itemDetail!.flingPower.toString()
                             : "N/A"),
                   ],
                 ),
@@ -112,8 +113,8 @@ class _ItemDetailSheetState extends State<ItemDetailSheet> {
 
   void getitemDetails() async {
     itemDetail = await APIHelper().geitemDetail(widget.url);
-    itemDetail.effectEntries.forEach((element) {
-      element.language.name == "en"
+    itemDetail?.effectEntries.forEach((element) {
+      element.language?.name == "en"
           ? description = element.effect
           : description = "";
     });

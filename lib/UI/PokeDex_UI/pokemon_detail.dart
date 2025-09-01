@@ -14,7 +14,7 @@ import 'package:my_pokedex/utitliy/constants.dart';
 
 class PokemonDetail extends StatefulWidget {
   final Pokemon pokemon;
-  PokemonDetail({this.pokemon});
+  PokemonDetail({required this.pokemon});
 
   @override
   _PokemonDetailState createState() => _PokemonDetailState();
@@ -22,8 +22,8 @@ class PokemonDetail extends StatefulWidget {
 
 class _PokemonDetailState extends State<PokemonDetail>
     with TickerProviderStateMixin {
-  TabController _tabController;
-  AnimationController animationController;
+  TabController? _tabController;
+  AnimationController? animationController;
   PokemonController pokemonController = Get.put(PokemonController());
 
   @override
@@ -34,15 +34,15 @@ class _PokemonDetailState extends State<PokemonDetail>
       vsync: this,
       duration: Duration(seconds: 2),
     );
-    animationController.forward();
-    animationController.repeat();
+    animationController?.forward();
+    animationController?.repeat();
     super.initState();
   }
 
   @override
   void dispose() {
-    animationController.dispose();
-    _tabController.dispose();
+    animationController?.dispose();
+    _tabController?.dispose();
     super.dispose();
   }
 
@@ -61,7 +61,7 @@ class _PokemonDetailState extends State<PokemonDetail>
                 bottom: (ResponsiveHelper.instance.height / 1.35),
                 child: RotationTransition(
                   turns:
-                      Tween(begin: 0.0, end: 1.0).animate(animationController),
+                      Tween(begin: 0.0, end: 1.0).animate(animationController!),
                   child: Image.asset(
                     'assets/pokemon_ball.png',
                     width: 230,
@@ -82,7 +82,7 @@ class _PokemonDetailState extends State<PokemonDetail>
                         Navigator.pop(context);
                       },
                       icon: Icon(
-                        LineIcons.arrow_left,
+                        LineIcons.arrowLeft,
                         color: Colors.white,
                       ),
                       iconSize: 30,

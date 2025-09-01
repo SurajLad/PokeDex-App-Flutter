@@ -18,7 +18,7 @@ class MovesTab extends StatelessWidget {
               ? ListView.builder(
                   physics: AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: pokemonController.pokemonAPI.moves.length,
+                  itemCount: pokemonController.pokemonAPI?.moves.length,
                   itemBuilder: (context, index) {
                     return Container(
                       padding: const EdgeInsets.all(16),
@@ -27,7 +27,7 @@ class MovesTab extends StatelessWidget {
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey[350],
+                            color: Colors.grey,
                             blurRadius: 4,
                             offset: Offset(0.0, 1.0),
                           )
@@ -36,12 +36,12 @@ class MovesTab extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Icon(LineIcons.dot_circle_o, size: 30),
+                          Icon(LineIcons.dotCircle, size: 30),
                           const SizedBox(width: 20),
                           Text(
-                            pokemonController
-                                .pokemonAPI.moves[index].move.name.capitalize
-                                .replaceAll("-", " "),
+                            pokemonController.pokemonAPI?.moves[index].move
+                                    ?.name?.capitalize ??
+                                ''.replaceAll("-", " "),
                             style: AppTextStyle.smallBold,
                           ),
                         ],

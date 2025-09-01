@@ -8,13 +8,13 @@ import 'package:my_pokedex/utitliy/constants.dart';
 
 class AbilityDetailSheet extends StatefulWidget {
   final String url;
-  AbilityDetailSheet({this.url});
+  AbilityDetailSheet({required this.url});
   @override
   _AbilityDetailSheetState createState() => _AbilityDetailSheetState();
 }
 
 class _AbilityDetailSheetState extends State<AbilityDetailSheet> {
-  AbilityDetail abilityDetail;
+  AbilityDetail? abilityDetail;
   String description = "";
 
   @override
@@ -39,7 +39,8 @@ class _AbilityDetailSheetState extends State<AbilityDetailSheet> {
                   children: [
                     const SizedBox(height: 20),
                     Text(
-                      abilityDetail.name.capitalizeFirst.replaceAll('-', " "),
+                      abilityDetail?.name?.capitalizeFirst ??
+                          ''.replaceAll('-', " "),
                       style: AppTextStyle.extraLargeBold
                           .copyWith(color: Color(0xFFB4B5BE)),
                     ),
@@ -64,7 +65,7 @@ class _AbilityDetailSheetState extends State<AbilityDetailSheet> {
                       height: 150,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: abilityDetail.pokemon.length,
+                        itemCount: abilityDetail?.pokemon.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,7 +77,7 @@ class _AbilityDetailSheetState extends State<AbilityDetailSheet> {
                                     right: 12.0, bottom: 10.0),
                                 child: CachedNetworkImageBuilder(
                                   url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/" +
-                                      abilityDetail.pokemon[index].pokemon.url
+                                      abilityDetail!.pokemon[index].pokemon!.url
                                           .replaceAll(
                                               "https://pokeapi.co/api/v2/pokemon/",
                                               "")
@@ -95,7 +96,7 @@ class _AbilityDetailSheetState extends State<AbilityDetailSheet> {
                                   imageExtensions: ['jpg', 'png'],
                                 ),
                               ),
-                              Text(abilityDetail.pokemon[index].pokemon.name),
+                              Text(abilityDetail!.pokemon[index].pokemon!.name),
                             ],
                           );
                         },
@@ -118,11 +119,13 @@ class _AbilityDetailSheetState extends State<AbilityDetailSheet> {
 
   void getAbilityDetails() async {
     abilityDetail = await APIHelper().getAbilityDetail(widget.url);
-    abilityDetail.effectEntries.forEach((element) {
-      element.language.name == "en"
-          ? description = element.effect
-          : description = "";
-    });
+    abilityDetail?.effectEntries.forEach(
+      (element) {
+        element.language?.name == "en"
+            ? description = element.effect
+            : description = "";
+      },
+    );
     setState(() {});
   }
 }
