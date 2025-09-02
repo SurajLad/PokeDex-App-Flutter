@@ -30,15 +30,6 @@ class _SplashPageState extends State<SplashPage> {
     ResponsiveHelper(
         width: Get.width, height: Get.height, fontSize: 18, titleFontSize: 22);
 
-    // return SplashScreen.navigate(
-    //   backgroundColor: Colors.white,
-    //   name: 'assets/poke_splash.flr',
-    //   height: Get.height,
-    //   next: (_) => HomePage(),
-    //   until: () => Future.delayed(Duration(seconds: 2)),
-    //   startAnimation: 'idle',
-    //   fit: BoxFit.fitHeight,
-    // );
     return Scaffold(
       body: Center(
         child: Image.asset(
